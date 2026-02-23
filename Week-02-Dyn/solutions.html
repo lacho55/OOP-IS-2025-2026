@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Динамична памет</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f5f7fa;
+      color: #333;
+    }
+    h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #2c3e50;
+      font-size: 1.1em;
+      margin-bottom: 8px;
+    }
+    .task-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .task-desc {
+      color: #555;
+      margin-bottom: 12px;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+    details {
+      margin-top: 10px;
+    }
+    summary {
+      cursor: pointer;
+      background: #3498db;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      display: inline-block;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    summary:hover { background: #2980b9; }
+    details[open] summary { background: #2980b9; }
+    pre {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88em;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+    .kw { color: #cba6f7; }
+    .type { color: #89b4fa; }
+    .fn { color: #a6e3a1; }
+    .cm { color: #6c7086; font-style: italic; }
+    .str { color: #a6e3a1; }
+    .num { color: #fab387; }
+    .section-header {
+      background: #2c3e50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin: 30px 0 15px 0;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🖥️ Динамична памет</h1>
+
+<div class="section-header">📘 Въведение (Задачи 0.1 – 0.5)</div>
+
+<!-- Task 0.1 -->
+<div class="task-card">
+  <h2>Задача 0.1 — Първа стъпка с динамична памет</h2>
+  <div class="task-desc">Заделя динамично памет за едно цяло число, присвоява му стойност 42, извежда я и освобождава паметта.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 0.1</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span>* ptr = <span class="kw">new</span> <span class="type">int</span>;
+    *ptr = <span class="num">42</span>;
+    cout &lt;&lt; *ptr &lt;&lt; endl;
+    <span class="kw">delete</span> ptr;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 0.2 -->
+<div class="task-card">
+  <h2>Задача 0.2 — Динамичен масив с фиксирана дължина</h2>
+  <div class="task-desc">Създава динамичен масив с 5 елемента, попълва го с числата 1–5, извежда ги и освобождава паметта.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 0.2</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span>* arr = <span class="kw">new</span> <span class="type">int</span>[<span class="num">5</span>];
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++)
+        arr[i] = i + <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++)
+        cout &lt;&lt; arr[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl;
+    <span class="kw">delete</span>[] arr;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 0.3 -->
+<div class="task-card">
+  <h2>Задача 0.3 — Динамичен масив с потребителски размер</h2>
+  <div class="task-desc">Чете n от потребителя, създава масив с n елемента (0..n-1), извежда го и освобождава паметта.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 0.3</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> n;
+    cout &lt;&lt; <span class="str">"Въведете n: "</span>;
+    cin &gt;&gt; n;
+
+    <span class="type">int</span>* arr = <span class="kw">new</span> <span class="type">int</span>[n];
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        arr[i] = i;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        cout &lt;&lt; arr[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl;
+
+    <span class="kw">delete</span>[] arr;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 0.4 -->
+<div class="task-card">
+  <h2>Задача 0.4 — Сумиране на елементи</h2>
+  <div class="task-desc">Чете n числа от потребителя, изчислява и извежда тяхната сума.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 0.4</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> n;
+    cout &lt;&lt; <span class="str">"Въведете n: "</span>;
+    cin &gt;&gt; n;
+
+    <span class="type">int</span>* arr = <span class="kw">new</span> <span class="type">int</span>[n];
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++) {
+        cout &lt;&lt; <span class="str">"Въведете елемент "</span> &lt;&lt; i &lt;&lt; <span class="str">": "</span>;
+        cin &gt;&gt; arr[i];
+    }
+
+    <span class="type">int</span> sum = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        sum += arr[i];
+    cout &lt;&lt; <span class="str">"Сумата е: "</span> &lt;&lt; sum &lt;&lt; endl;
+
+    <span class="kw">delete</span>[] arr;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 0.5 -->
+<div class="task-card">
+  <h2>Задача 0.5 — Намиране на максимум</h2>
+  <div class="task-desc">Чете n числа, намира и извежда най-голямото.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 0.5</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> n;
+    cout &lt;&lt; <span class="str">"Въведете n: "</span>;
+    cin &gt;&gt; n;
+
+    <span class="type">int</span>* arr = <span class="kw">new</span> <span class="type">int</span>[n];
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++) {
+        cout &lt;&lt; <span class="str">"Въведете елемент "</span> &lt;&lt; i &lt;&lt; <span class="str">": "</span>;
+        cin &gt;&gt; arr[i];
+    }
+
+    <span class="type">int</span> maxVal = arr[<span class="num">0</span>];
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">1</span>; i &lt; n; i++)
+        <span class="kw">if</span> (arr[i] &gt; maxVal) maxVal = arr[i];
+    cout &lt;&lt; <span class="str">"Максималният елемент е: "</span> &lt;&lt; maxVal &lt;&lt; endl;
+
+    <span class="kw">delete</span>[] arr;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<div class="section-header">📗 Основни задачи (Задачи 1 – 8 + BONUS)</div>
+
+<!-- Task 1 -->
+<div class="task-card">
+  <h2>Задача 1 — Размяна на стойности</h2>
+  <div class="task-desc">Функция, която приема два указателя към цели числа и разменя стойностите им.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 1</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">void</span> <span class="fn">swap</span>(<span class="type">int</span>* a, <span class="type">int</span>* b) {
+    <span class="type">int</span> temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> x = <span class="num">5</span>, y = <span class="num">10</span>;
+    cout &lt;&lt; <span class="str">"Before: x="</span> &lt;&lt; x &lt;&lt; <span class="str">" y="</span> &lt;&lt; y &lt;&lt; endl;
+    <span class="fn">swap</span>(&amp;x, &amp;y);
+    cout &lt;&lt; <span class="str">"After:  x="</span> &lt;&lt; x &lt;&lt; <span class="str">" y="</span> &lt;&lt; y &lt;&lt; endl;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 2 -->
+<div class="task-card">
+  <h2>Задача 2 — Динамичен масив с произволни числа</h2>
+  <div class="task-desc">Създава динамичен масив с n произволни числа в [-1000, 1000], функция за принтиране и функция за средно аритметично.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 2</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;cstdlib&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;ctime&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">void</span> <span class="fn">printArray</span>(<span class="type">int</span>* arr, <span class="type">int</span> n) {
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        cout &lt;&lt; arr[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl;
+}
+
+<span class="type">double</span> <span class="fn">average</span>(<span class="type">int</span>* arr, <span class="type">int</span> n) {
+    <span class="type">double</span> sum = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        sum += arr[i];
+    <span class="kw">return</span> sum / n;
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    srand(time(<span class="num">0</span>));
+    <span class="type">int</span> n;
+    cout &lt;&lt; <span class="str">"Въведете n: "</span>;
+    cin &gt;&gt; n;
+
+    <span class="type">int</span>* arr = <span class="kw">new</span> <span class="type">int</span>[n];
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        arr[i] = (rand() % <span class="num">2001</span>) - <span class="num">1000</span>;
+
+    <span class="fn">printArray</span>(arr, n);
+    cout &lt;&lt; <span class="str">"Средно: "</span> &lt;&lt; <span class="fn">average</span>(arr, n) &lt;&lt; endl;
+
+    <span class="kw">delete</span>[] arr;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 3 -->
+<div class="task-card">
+  <h2>Задача 3 — Обръщане на масив</h2>
+  <div class="task-desc">Функция reverse, която обръща масив на място.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 3</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">void</span> <span class="fn">reverse</span>(<span class="type">int</span>* arr, <span class="type">int</span> n) {
+    <span class="type">int</span> left = <span class="num">0</span>, right = n - <span class="num">1</span>;
+    <span class="kw">while</span> (left &lt; right) {
+        <span class="type">int</span> temp = arr[left];
+        arr[left]  = arr[right];
+        arr[right] = temp;
+        left++;
+        right--;
+    }
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> a[] = {<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>};
+    <span class="fn">reverse</span>(a, <span class="num">5</span>);
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++)
+        cout &lt;&lt; a[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl; <span class="cm">// 5 4 3 2 1</span>
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 4 -->
+<div class="task-card">
+  <h2>Задача 4 — Сливане на два сортирани масива</h2>
+  <div class="task-desc">Слива два сортирани масива в трети, така че резултатът също да е сортиран (без допълнително сортиране).</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 4</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Precondition: result must have size n1+n2</span>
+<span class="type">void</span> <span class="fn">mergeSorted</span>(<span class="type">int</span>* a, <span class="type">int</span> n1, <span class="type">int</span>* b, <span class="type">int</span> n2, <span class="type">int</span>* result) {
+    <span class="type">int</span> i = <span class="num">0</span>, j = <span class="num">0</span>, k = <span class="num">0</span>;
+    <span class="kw">while</span> (i &lt; n1 &amp;&amp; j &lt; n2) {
+        <span class="kw">if</span> (a[i] &lt;= b[j]) result[k++] = a[i++];
+        <span class="kw">else</span>               result[k++] = b[j++];
+    }
+    <span class="kw">while</span> (i &lt; n1) result[k++] = a[i++];
+    <span class="kw">while</span> (j &lt; n2) result[k++] = b[j++];
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> a[] = {<span class="num">1</span>, <span class="num">3</span>, <span class="num">5</span>};
+    <span class="type">int</span> b[] = {<span class="num">2</span>, <span class="num">4</span>, <span class="num">6</span>, <span class="num">8</span>};
+    <span class="type">int</span> n1 = <span class="num">3</span>, n2 = <span class="num">4</span>;
+    <span class="type">int</span>* merged = <span class="kw">new</span> <span class="type">int</span>[n1 + n2];
+
+    <span class="fn">mergeSorted</span>(a, n1, b, n2, merged);
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n1 + n2; i++)
+        cout &lt;&lt; merged[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl; <span class="cm">// 1 2 3 4 5 6 8</span>
+
+    <span class="kw">delete</span>[] merged;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 5 -->
+<div class="task-card">
+  <h2>Задача 5 — Последен елемент равен на средното на съседите</h2>
+  <div class="task-desc">Връща индекса на последния елемент, равен на средното аритметично на съседите си. Крайните елементи имат само един съсед. Връща -1 при липса.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 5</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">int</span> <span class="fn">lastAvgNeighbor</span>(<span class="type">double</span>* arr, <span class="type">int</span> n) {
+    <span class="type">int</span> result = -<span class="num">1</span>;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++) {
+        <span class="type">double</span> avg;
+        <span class="kw">if</span> (i == <span class="num">0</span>)         avg = arr[<span class="num">1</span>];
+        <span class="kw">else if</span> (i == n-<span class="num">1</span>)   avg = arr[n-<span class="num">2</span>];
+        <span class="kw">else</span>                avg = (arr[i-<span class="num">1</span>] + arr[i+<span class="num">1</span>]) / <span class="num">2.0</span>;
+
+        <span class="kw">if</span> (arr[i] == avg) result = i;
+    }
+    <span class="kw">return</span> result;
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">double</span> arr[] = {<span class="num">1</span>, <span class="num">3</span>, <span class="num">2</span>, <span class="num">4</span>, <span class="num">3</span>};
+    <span class="cm">// arr[2]=2, avg(1,3)=2 ✓  arr[4]=3, avg(4)=4 ✗  arr[2] is result</span>
+    cout &lt;&lt; <span class="fn">lastAvgNeighbor</span>(arr, <span class="num">5</span>) &lt;&lt; endl; <span class="cm">// 2</span>
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 6 -->
+<div class="task-card">
+  <h2>Задача 6 — Премахване на всички срещания на число</h2>
+  <div class="task-desc">Премахва всички срещания на дадено число от масив (на място, намалява размера). Връща true ако е премахнато поне едно срещане.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 6</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">bool</span> <span class="fn">removeAll</span>(<span class="type">int</span>* arr, <span class="type">int</span>&amp; n, <span class="type">int</span> val) {
+    <span class="type">int</span> writeIdx = <span class="num">0</span>;
+    <span class="type">bool</span> found = <span class="kw">false</span>;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++) {
+        <span class="kw">if</span> (arr[i] == val) {
+            found = <span class="kw">true</span>;
+        } <span class="kw">else</span> {
+            arr[writeIdx++] = arr[i];
+        }
+    }
+    n = writeIdx;
+    <span class="kw">return</span> found;
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> arr[] = {<span class="num">1</span>, <span class="num">3</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">3</span>};
+    <span class="type">int</span> n = <span class="num">6</span>;
+    <span class="type">bool</span> removed = <span class="fn">removeAll</span>(arr, n, <span class="num">3</span>);
+    cout &lt;&lt; (removed ? <span class="str">"Removed"</span> : <span class="str">"Not found"</span>) &lt;&lt; endl;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        cout &lt;&lt; arr[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl; <span class="cm">// 1 2 4</span>
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 7 -->
+<div class="task-card">
+  <h2>Задача 7 — Двумерен динамичен масив</h2>
+  <div class="task-desc">Създава 2D масив с произволни числа [-50, 50], функция за извеждане, sumByRow и sumByCol, и освобождаване на паметта.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 7</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;cstdlib&gt;</span>
+<span class="kw">#include</span> <span class="str">&lt;ctime&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">void</span> <span class="fn">printMatrix</span>(<span class="type">int</span>** m, <span class="type">int</span> rows, <span class="type">int</span> cols) {
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; rows; i++) {
+        <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; cols; j++)
+            cout &lt;&lt; m[i][j] &lt;&lt; <span class="str">"\t"</span>;
+        cout &lt;&lt; endl;
+    }
+}
+
+<span class="type">int</span>* <span class="fn">sumByRow</span>(<span class="type">int</span>** m, <span class="type">int</span> rows, <span class="type">int</span> cols) {
+    <span class="type">int</span>* sums = <span class="kw">new</span> <span class="type">int</span>[rows]();
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; rows; i++)
+        <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; cols; j++)
+            sums[i] += m[i][j];
+    <span class="kw">return</span> sums;
+}
+
+<span class="type">int</span>* <span class="fn">sumByCol</span>(<span class="type">int</span>** m, <span class="type">int</span> rows, <span class="type">int</span> cols) {
+    <span class="type">int</span>* sums = <span class="kw">new</span> <span class="type">int</span>[cols]();
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; rows; i++)
+        <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; cols; j++)
+            sums[j] += m[i][j];
+    <span class="kw">return</span> sums;
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    srand(time(<span class="num">0</span>));
+    <span class="type">int</span> rows, cols;
+    cout &lt;&lt; <span class="str">"Rows: "</span>; cin &gt;&gt; rows;
+    cout &lt;&lt; <span class="str">"Cols: "</span>; cin &gt;&gt; cols;
+
+    <span class="type">int</span>** m = <span class="kw">new</span> <span class="type">int</span>*[rows];
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; rows; i++) {
+        m[i] = <span class="kw">new</span> <span class="type">int</span>[cols];
+        <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; cols; j++)
+            m[i][j] = (rand() % <span class="num">101</span>) - <span class="num">50</span>;
+    }
+
+    <span class="fn">printMatrix</span>(m, rows, cols);
+
+    <span class="type">int</span>* rowSums = <span class="fn">sumByRow</span>(m, rows, cols);
+    <span class="type">int</span>* colSums = <span class="fn">sumByCol</span>(m, rows, cols);
+
+    cout &lt;&lt; <span class="str">"Row sums: "</span>;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; rows; i++) cout &lt;&lt; rowSums[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl;
+
+    cout &lt;&lt; <span class="str">"Col sums: "</span>;
+    <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; cols; j++) cout &lt;&lt; colSums[j] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl;
+
+    <span class="kw">delete</span>[] rowSums;
+    <span class="kw">delete</span>[] colSums;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; rows; i++)
+        <span class="kw">delete</span>[] m[i];
+    <span class="kw">delete</span>[] m;
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- Task 8 -->
+<div class="task-card">
+  <h2>Задача 8 — Функции за управление на масив</h2>
+  <div class="task-desc">createArray, initArray, createInitArray, printArray, freeArray — с повторна инициализация на нов масив на същия адрес.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// Task 8</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="type">int</span>* <span class="fn">createArray</span>(<span class="type">int</span> size) {
+    <span class="kw">return</span> <span class="kw">new</span> <span class="type">int</span>[size];
+}
+
+<span class="type">void</span> <span class="fn">initArray</span>(<span class="type">int</span>* arr, <span class="type">int</span> size) {
+    cout &lt;&lt; <span class="str">"Въведете "</span> &lt;&lt; size &lt;&lt; <span class="str">" числа: "</span>;
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; size; i++)
+        cin &gt;&gt; arr[i];
+}
+
+<span class="type">int</span>* <span class="fn">createInitArray</span>(<span class="type">int</span> size) {
+    <span class="type">int</span>* arr = <span class="fn">createArray</span>(size);
+    <span class="fn">initArray</span>(arr, size);
+    <span class="kw">return</span> arr;
+}
+
+<span class="type">void</span> <span class="fn">printArray</span>(<span class="type">int</span>* arr, <span class="type">int</span> size) {
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; size; i++)
+        cout &lt;&lt; arr[i] &lt;&lt; <span class="str">" "</span>;
+    cout &lt;&lt; endl;
+}
+
+<span class="type">void</span> <span class="fn">freeArray</span>(<span class="type">int</span>* arr) {
+    <span class="kw">delete</span>[] arr;
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> size1;
+    cout &lt;&lt; <span class="str">"Размер на първия масив: "</span>;
+    cin &gt;&gt; size1;
+    <span class="type">int</span>* arr = <span class="fn">createInitArray</span>(size1);
+    <span class="fn">printArray</span>(arr, size1);
+    <span class="fn">freeArray</span>(arr);
+
+    <span class="cm">// Re-initialize at same pointer variable with new size</span>
+    <span class="type">int</span> size2;
+    cout &lt;&lt; <span class="str">"Размер на втория масив: "</span>;
+    cin &gt;&gt; size2;
+    arr = <span class="fn">createInitArray</span>(size2);
+    <span class="fn">printArray</span>(arr, size2);
+    <span class="fn">freeArray</span>(arr);
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+<!-- BONUS -->
+<div class="task-card">
+  <h2>⭐ BONUS — Двоично търсене с указател</h2>
+  <div class="task-desc">Функция, която търси число в масив (двоично ако е сортиран) и връща указател към първото срещане, или NULL.</div>
+  <details>
+    <summary>Solution</summary>
+    <pre><span class="cm">// BONUS — Binary search returning pointer</span>
+<span class="kw">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Precondition: array must be sorted for binary search to work correctly</span>
+<span class="type">int</span>* <span class="fn">binarySearch</span>(<span class="type">int</span>* arr, <span class="type">int</span> n, <span class="type">int</span> target) {
+    <span class="type">int</span> left = <span class="num">0</span>, right = n - <span class="num">1</span>;
+    <span class="type">int</span>* found = <span class="kw">nullptr</span>;
+
+    <span class="kw">while</span> (left &lt;= right) {
+        <span class="type">int</span> mid = left + (right - left) / <span class="num">2</span>;
+        <span class="kw">if</span> (arr[mid] == target) {
+            found = &amp;arr[mid];
+            right = mid - <span class="num">1</span>; <span class="cm">// keep searching left for FIRST occurrence</span>
+        } <span class="kw">else if</span> (arr[mid] &lt; target) {
+            left = mid + <span class="num">1</span>;
+        } <span class="kw">else</span> {
+            right = mid - <span class="num">1</span>;
+        }
+    }
+    <span class="kw">return</span> found; <span class="cm">// nullptr if not found</span>
+}
+
+<span class="type">int</span> <span class="fn">main</span>() {
+    <span class="type">int</span> arr[] = {<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">3</span>, <span class="num">5</span>, <span class="num">8</span>, <span class="num">13</span>};
+    <span class="type">int</span> n = <span class="num">7</span>;
+
+    <span class="type">int</span>* ptr = <span class="fn">binarySearch</span>(arr, n, <span class="num">3</span>);
+    <span class="kw">if</span> (ptr) cout &lt;&lt; <span class="str">"Found: "</span> &lt;&lt; *ptr &lt;&lt; <span class="str">" at index "</span> &lt;&lt; (ptr - arr) &lt;&lt; endl;
+    <span class="kw">else</span>     cout &lt;&lt; <span class="str">"Not found"</span> &lt;&lt; endl;
+
+    ptr = <span class="fn">binarySearch</span>(arr, n, <span class="num">7</span>);
+    <span class="kw">if</span> (ptr) cout &lt;&lt; <span class="str">"Found: "</span> &lt;&lt; *ptr &lt;&lt; endl;
+    <span class="kw">else</span>     cout &lt;&lt; <span class="str">"Not found"</span> &lt;&lt; endl;
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre>
+  </details>
+</div>
+
+</body>
+</html>
